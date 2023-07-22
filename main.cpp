@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include <raylib.h>
 
 // Gamestates
 enum class GameStates
@@ -13,7 +14,11 @@ GameStates gameState = GameStates::GAME;
 const int sWidth = 1280;
 const int sHeight = 720;
 
+// Create game objects
+Player player;
+
 // Init stuff
+void initPlayer();
 void init();
 
 // Updating stuff
@@ -35,6 +40,7 @@ int main()
     // Main game loop
     while (!WindowShouldClose())
     {
+        update();
         render();
     }
 
@@ -42,6 +48,14 @@ int main()
 }
 
 // Init game components
+void playerInit()
+{
+    player.tex = LoadTexture("./Textures/Player/Bot.png");
+
+    player.collBox = { player.position.x, player.position.y, (float)player.tex.width, (float)player.tex.height };
+
+    player.position = (Vector2){120, 10};
+}
 void init()
 {
     // Create window
@@ -49,12 +63,15 @@ void init()
 
     // Set FPS target
     SetTargetFPS(60);
+
+    // Init other components
+    playerInit();
 }
 
 // Update game components
 void gameUpdate()
 {
-
+    player.update();
 }
 void update()
 {
@@ -70,9 +87,11 @@ void update()
 // Render game components
 void gameRender()
 {
-    ClearBackground(WHITE);
+    ClearBackground(VIOLET);
 
     BeginDrawing();
+
+    player.render();
 
     EndDrawing();
 }
@@ -90,5 +109,7 @@ void render()
 // Deinitialization game components
 void deinit()
 {
+    player.deinit();
+
     CloseWindow();
 }
