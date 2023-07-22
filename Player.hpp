@@ -13,7 +13,7 @@ struct Player
 
     // Speed and gravity
     float speed = 10.f;
-    float grav = 1.f;
+    float grav = 5.f;
 
     // Player update
     void update()
@@ -22,6 +22,8 @@ struct Player
 
         if (IsKeyDown(KEY_A)) velocity.x -= speed;
         if (IsKeyDown(KEY_D)) velocity.x += speed;
+
+        if (IsKeyPressed(KEY_SPACE)) grav = grav * -1;
 
         position.x += velocity.x;
         position.y += velocity.y;
